@@ -30,6 +30,7 @@ public class ScoreFragment extends Fragment {
 	private List<GoalScorer> homeGoalScorerList;
 	private List<GoalScorer> awayGoalScorerList;
 	private FragmentScoreBinding binding;
+	private StringBuilder result;
 	public ScoreFragment() {
 		// Required empty public constructor
 	}
@@ -53,6 +54,7 @@ public class ScoreFragment extends Fragment {
 			 public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
 				GoalScorer goalScorer = result.getParcelable(SCORER_KEY);
 				homeGoalScorerList.add(goalScorer);
+
 			 }
 		 });
 		 getParentFragmentManager().setFragmentResultListener(AWAY_REQUEST_KEY, this, new FragmentResultListener() {
@@ -83,4 +85,19 @@ public class ScoreFragment extends Fragment {
 		Navigation.findNavController(view).navigate(action);
 	}
 
+	public String getHomeData(){
+		result = new StringBuilder();
+		for(GoalScorer g : homeGoalScorerList){
+			result.append(g.getName() + " " + g.getMinute() + "\" ");
+		}
+		return result.toString();
+	}
+
+	public String getAwayData(){
+		result = new StringBuilder();
+		for(GoalScorer g : awayGoalScorerList){
+			result.append(g.getName() + " " + g.getMinute() + "\" ");
+		}
+		return result.toString();
+	}
 }
